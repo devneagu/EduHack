@@ -5,6 +5,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import React, {useEffect, useRef, useState} from "react";
 import { createCustomEqual } from "fast-equals";
 
+const gmapsKey = 'AIzaSyB_9CxDgXZH_Tf-3hczc8mAqVSwakxn8fk';
 const render = (status) => {
     return <h1>{status}</h1>;
 };
@@ -77,7 +78,7 @@ export default function GMaps() {
 
     return (
         <div style={{ display: "flex", height: "100%" }}>
-            <Wrapper apiKey={'AIzaSyB_9CxDgXZH_Tf-3hczc8mAqVSwakxn8fk'} render={render}>
+            <Wrapper apiKey={gmapsKey} render={render}>
                 <Map
                     center={center}
                     onClick={onClick}
