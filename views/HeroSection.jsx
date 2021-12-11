@@ -13,6 +13,7 @@ import {
     IconProps,
     useColorModeValue,
 } from '@chakra-ui/react';
+import {FaUser} from "react-icons/fa";
 
 export default function HeroSection() {
     return (
@@ -63,15 +64,15 @@ export default function HeroSection() {
                             colorScheme={'red'}
                             bg={'red.400'}
                             _hover={{ bg: 'red.500' }}>
-                            Get started
+                            Vreau sa incep
                         </Button>
                         <Button
                             rounded={'full'}
                             size={'lg'}
                             fontWeight={'normal'}
                             px={6}
-                            leftIcon={<PlayIcon h={4} w={4} color={'gray.300'} />}>
-                            How It Works
+                            leftIcon={<FaUser h={4} w={4} color={'gray.300'} />}>
+                            Login
                         </Button>
                     </Stack>
                 </Stack>

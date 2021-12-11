@@ -49,7 +49,7 @@ export default function TriggerActionHero() {
                                     pointerEvents='none'
                                     children={<FaMapMarkerAlt />}
                                 />
-                                <Input type='tel' placeholder='Phone number' />
+                                <Input type='tel' placeholder='Locatie' />
                                 <Button
                                     colorScheme={'green'}
                                     bg={'green.400'}
