@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {userAtom} from "../recoil/userAtom";
 import Onboarding from "../components/Onboarding";
+import Dashboard from "../components/Dashboard";
 
 
 
@@ -13,9 +14,6 @@ export default function Home() {
     const user = useRecoilValue(userAtom);
     return (
         <>
-            <button className="button block" onClick={() => base.auth.signOut()}>
-                Sign Out
-            </button>
             {
                 user.onboarding === false
                 &&
@@ -25,7 +23,7 @@ export default function Home() {
             {
                 user.onboarding === true
                 &&
-                    <p>Dashboard</p>
+                    <Dashboard />
 
             }
         </>

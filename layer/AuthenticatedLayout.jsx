@@ -17,7 +17,6 @@ export default function AuthenticatedLayout({children}) {
             setLoading(true)
             const usr = await base.auth.user();
             const {data,error} = await base.from('profiles').select('*').eq('id',usr.id).single();
-            //save to atom
             setUser(data);
             setLoading(false)
         })();
