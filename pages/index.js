@@ -1,19 +1,33 @@
-import ViewOtherEvents from "../views/otherEvents";
-import HeroSection from "../views/HeroSection";
-import TriggerActionHero from "../views/TriggerActionHero";
-import StatsGridImage from "../views/StatsGridImage";
-import Footer from "../views/footer";
-import Testimonials from "../views/Testimonials";
+
+import {base} from "../utils/sClient";
+import {useEffect, useState} from "react";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {userAtom} from "../recoil/userAtom";
+import Onboarding from "../components/Onboarding";
+
+
 
 export default function Home() {
     // <ViewOtherEvents size={8}/>
+
+    const user = useRecoilValue(userAtom);
     return (
         <>
-            <TriggerActionHero />
-            <HeroSection />
-<StatsGridImage />
-            <Testimonials />
-<Footer/>
+            <button className="button block" onClick={() => base.auth.signOut()}>
+                Sign Out
+            </button>
+            {
+                user.onboarding === false
+                &&
+                    <Onboarding />
+            }
+
+            {
+                user.onboarding === true
+                &&
+                    <p>Dashboard</p>
+
+            }
         </>
     )
 }
