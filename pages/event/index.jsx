@@ -34,7 +34,6 @@ export default function Event() {
     },[])
 
     const elementClickMap = (event) => {
-        console.log(event)
         if(event.mapPosition.length == undefined){
             setCenterData(event.mapPosition);
             setZoom(16)
@@ -44,11 +43,13 @@ export default function Event() {
         <>
             <Flex minH={'calc(100vh - 60px)'}>
                 <Box w={'400px'}>
-                    <Button m={'0.5em'} colorScheme={'green'} onClick={goToInsertPage}>Adauga Eveniment</Button>
+                    <div style={{height : 'calc(100vh - 60px - 4em'}}>
+                    <Button m={'0.5em'} w={'95%'} colorScheme={'gray'} onClick={goToInsertPage}>Adauga Eveniment</Button>
+                        <div style={{overflow:'auto',height:'100%'}}>
                     {
                         eventData.map(el => (
                             <Box bg={useColorModeValue('white', 'gray.700')}
-                                 p={5} boxShadow={'lg'} key={el.id} style={{padding:'0.5em',  borderRadius:'0.5em', margin:'0.5em', marginTop : '0'}} onClick={() => elementClickMap(el)}>
+                                 p={5} boxShadow={'lg'} key={el.id} style={{padding:'1.5em',  borderRadius:'0.5em', margin:'0.5em', marginTop : '0'}} onClick={() => elementClickMap(el)}>
                                 <Heading fontSize={'md'}>{el.title}</Heading>
                                 <Text>{el.description.substring(0,50) + '...'}</Text>
                                 <Tag colorScheme={"gray"} marginRight={'0.5em'}>{el.payable ? 'Cu plata' : 'Gratis'}</Tag>
@@ -56,6 +57,8 @@ export default function Event() {
                             </Box>
                         ))
                     }
+                        </div>
+                    </div>
                 </Box>
                 <Box flex='1' bg='gray' h={'auto'}>
                     <GmapsRead clicks={dataMarkers}  rightLayout={false} center={centerData} zoom={zoom}/>

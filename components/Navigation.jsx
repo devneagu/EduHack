@@ -262,4 +262,8 @@ const NAV_ITEMS= [
         label: 'Profil',
         href: '/profil',
     },
+    {
+        label: 'Feedback',
+        href: '/feedback',
+    },
 ];
