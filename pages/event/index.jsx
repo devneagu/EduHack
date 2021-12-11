@@ -1,4 +1,4 @@
-import {Box, Button, Center, Flex, Heading, Tag, Text} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Tag, Text, useColorModeValue} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {base} from "../../utils/sClient";
@@ -40,17 +40,18 @@ export default function Event() {
     }
     return (
         <>
-            <Flex minH={'100vh'}>
+            <Flex minH={'calc(100vh - 60px)'}>
                 <Box w={'400px'}>
                     <Button m={'0.5em'} colorScheme={'green'} onClick={goToInsertPage}>Adauga Eveniment</Button>
                     {
                         eventData.map(el => (
-                            <div key={el.id} style={{border:'1px solid black',padding:'0.5em', borderRadius:'0.5em', margin:'0.5em', marginTop : '0'}}>
-                                <Heading fontSize={'xl'} onClick={() => elementClickMap(el)}>{el.title}</Heading>
-                                <Text>{el.description.substring(0,35) + '...'}</Text>
-                                <Tag colorScheme={"red"} marginRight={'0.5em'}>{el.payable ? 'Cu plata' : 'Gratis'}</Tag>
+                            <Box bg={useColorModeValue('white', 'gray.700')}
+                                 p={5} boxShadow={'lg'} key={el.id} style={{padding:'0.5em',  borderRadius:'0.5em', margin:'0.5em', marginTop : '0'}} onClick={() => elementClickMap(el)}>
+                                <Heading fontSize={'md'}>{el.title}</Heading>
+                                <Text>{el.description.substring(0,50) + '...'}</Text>
+                                <Tag colorScheme={"gray"} marginRight={'0.5em'}>{el.payable ? 'Cu plata' : 'Gratis'}</Tag>
                                 <Tag colorScheme={"purple"}>{el.eventType ? 'Fizic' : 'Online'}</Tag>
-                            </div>
+                            </Box>
                         ))
                     }
                 </Box>

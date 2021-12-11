@@ -8,6 +8,7 @@ import {useSetRecoilState} from "recoil";
 import {userAtom} from "../recoil/userAtom";
 import {useEffect, useState} from "react";
 import {base} from "../utils/sClient";
+import WithSubnavigation from "../components/Navigation";
 
 export default function AuthenticatedLayout({children}) {
     const setUser = useSetRecoilState(userAtom);
@@ -24,7 +25,11 @@ export default function AuthenticatedLayout({children}) {
     return (
         <>
             {loading === false &&
-                <>{children}</>
+                <>
+                    <WithSubnavigation/>
+                    {children}
+                </>
+
             }
         </>
     )
