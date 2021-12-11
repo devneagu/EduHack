@@ -10,16 +10,13 @@ const render = (status) => {
     return <h1>{status}</h1>;
 };
 
-export default function GmapsRead({rightLayout,clicks,center}) {
-
-    const [zoom, setZoom] = useState(8);
-
+export default function GmapsRead({rightLayout,clicks,center,zoom}) {
 
     const onClick = (e) => {
 
     };
     const onIdle = (m) => {
-        setZoom(m.getZoom());
+        // setZoom(m.getZoom());
     };
 
 

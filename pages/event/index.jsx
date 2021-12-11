@@ -8,7 +8,8 @@ import GmapsRead from "../../components/GmapsRead";
 export default function Event() {
     const [eventData, setEventData] = useState([]);
     const [dataMarkers,setDataMarkers] = useState([]);
-    const [centerData,setCenterData] = useState({ lat: 45.6363010353717, lng: 25.2 })
+    const [centerData,setCenterData] = useState({ lat: 45.1855, lng: 25.191112 })
+    const [zoom,setZoom] = useState(7);
     const router= useRouter();
 
     const goToInsertPage = () => {
@@ -36,6 +37,7 @@ export default function Event() {
         console.log(event)
         if(event.mapPosition.length == undefined){
             setCenterData(event.mapPosition);
+            setZoom(16)
         }
     }
     return (
@@ -56,7 +58,7 @@ export default function Event() {
                     }
                 </Box>
                 <Box flex='1' bg='gray' h={'auto'}>
-                    <GmapsRead clicks={dataMarkers}  rightLayout={false} center={centerData}/>
+                    <GmapsRead clicks={dataMarkers}  rightLayout={false} center={centerData} zoom={zoom}/>
                 </Box>
             </Flex>
 

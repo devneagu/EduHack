@@ -10,15 +10,18 @@ import AuthenticatedLayout from "../layer/AuthenticatedLayout";
 function MyApp({ Component, pageProps }) {
     const router = useRouter()
     const [authenticatedState, setAuthenticatedState] = useState(false)
-
+    const [loading,setLoading] = useState(true);
     useEffect(() => {
+        setLoading(true);
         const { data: authListener } = base.auth.onAuthStateChange((event, session) => {
             handleAuthChange(event, session)
             if (event === 'SIGNED_IN') {
                 setAuthenticatedState(true)
+                setLoading(false);
                 router.push('/')
             }
             if (event === 'SIGNED_OUT') {
+                setLoading(false);
                 setAuthenticatedState(false)
             }
         })
@@ -31,6 +34,7 @@ function MyApp({ Component, pageProps }) {
     async function checkUser() {
         const user = await base.auth.user()
         if (user) {
+            setLoading(false);
             setAuthenticatedState(true)
         }
     }
@@ -42,17 +46,19 @@ function MyApp({ Component, pageProps }) {
             body: JSON.stringify({ event, session }),
         })
     }
-    const [loading, setLoading] = useState(false);
   return(
     <RecoilRoot>
       <ChakraProvider>
-
-          {authenticatedState === true &&
+          {
+              loading === true &&
+                  <p>Loading.....</p>
+          }
+          {loading === false && authenticatedState === true &&
               (<AuthenticatedLayout h={authenticatedState}>
                   <Component {...pageProps} />
               </AuthenticatedLayout>)
           }
-          {!authenticatedState &&
+          {loading === false && !authenticatedState &&
               <GuestLayout />
           }
       </ChakraProvider>
