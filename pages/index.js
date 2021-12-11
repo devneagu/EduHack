@@ -1,8 +1,8 @@
-import OtherEvents from "./otherEvents";
+import ViewOtherEvents from "../views/otherEvents";
 
 export default function Home() {
 
     return (
-        <OtherEvents />
+        <ViewOtherEvents size={8}/>
     )
 }

@@ -9,13 +9,13 @@ import {Heading, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 
-export default function ViewOtherEvents() {
+export default function ViewOtherEvents({size}) {
     const [events,setEvents] = useState([]);
     const router = useRouter();
     useEffect(() => {
         (async function(){
 
-            const {data,error} = await base.from('ScrapedData').select('*').range(0,9);
+            const {data,error} = await base.from('ScrapedData').select('*').range(0,size-1);
             console.log(data.length)
             if(data && data.length > 0){
                 setEvents(data);
@@ -32,7 +32,7 @@ export default function ViewOtherEvents() {
 
             {events.length > 0 &&
             <div style={{marginLeft:'5%'}}>
-                <Heading fontSize={'lg'}  fontFamily={'body'} fontWeight={500} position={"relative"} onClick={goToOtherEvents}>
+                <Heading fontSize={'lg'}  fontFamily={'body'} fontWeight={500} position={"relative"} onClick={goToOtherEvents} style={{cursor:"pointer"}}>
                     Alte Evenimente <ExternalLinkIcon fontSize={'xs'} />
                 </Heading>
 
