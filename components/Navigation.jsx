@@ -255,6 +255,10 @@ const NAV_ITEMS= [
         href: '/event'
     },
     {
+        label: 'Networking',
+        href: '/networking',
+    },
+    {
         label: 'Profil',
         href: '/profil',
     },

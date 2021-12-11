@@ -37,6 +37,7 @@ function MyApp({ Component, pageProps }) {
             setLoading(false);
             setAuthenticatedState(true)
         }
+        setLoading(false);
     }
     async function handleAuthChange(event, session) {
         await fetch('/api/auth', {
