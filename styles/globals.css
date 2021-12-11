@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.react-datepicker__input-container {
+  border: 1px solid #E2E8F0;
+  border-radius: 0.4em;
+  padding: 0.45em;
+  color : #A0AEC0;
+}
