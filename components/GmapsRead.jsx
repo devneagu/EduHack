@@ -12,7 +12,7 @@ const render = (status) => {
 
 export default function GmapsRead({rightLayout,clicks,center}) {
 
-    const [zoom, setZoom] = useState(9);
+    const [zoom, setZoom] = useState(8);
 
 
     const onClick = (e) => {
