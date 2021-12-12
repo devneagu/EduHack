@@ -85,14 +85,12 @@ export default function Dashboard() {
                             as={'span'}
                             bgGradient="linear(to-r, red.400,pink.400)"
                             bgClip="text">
-                            Ultimele 5 evenimente Adaugate
+                            Ultimele 5 Evenimente Adaugate
                         </Text>{' '}
                     </Heading>
                     <Swiper
                         spaceBetween={50}
                         slidesPerView={variant}
-                        onSlideChange={() => console.log('slide change')}
-                        onSwiper={(swiper) => console.log(swiper)}
                     >
                         {events.map(el => (
                             <SwiperSlide key={el.id}><SliderCard el={el} /></SwiperSlide>

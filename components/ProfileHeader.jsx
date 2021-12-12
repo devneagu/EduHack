@@ -12,13 +12,13 @@ import {
 } from '@chakra-ui/react';
 import {Component, useEffect, useState} from "react";
 import {base} from "../utils/sClient";
-export default function ProfileHeader() {
+export default function ProfileHeader({profileId}) {
     const [data,setData] = useState(null)
 
     useEffect(() => {
         (async function(){
             const user = await base.auth.user();
-            const {data:profile,error} = await base.from('profiles').select('*').eq('id',user.id).single();
+            const {data:profile,error} = await base.from('profiles').select('*').eq('id',profileId === undefined ? user.id : profileId).single();
             if(error) {
                 setData(false);
             }

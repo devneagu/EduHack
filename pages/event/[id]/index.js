@@ -3,8 +3,20 @@ import {
     Input,
     Stack,
     Text,
-    InputGroup,useToast,
-    InputLeftElement, Button, FormControl, FormLabel, HStack, Textarea, Tag, Select, TagCloseButton, TagLabel
+    InputGroup,
+    useToast,
+    InputLeftElement,
+    Button,
+    FormControl,
+    FormLabel,
+    HStack,
+    Textarea,
+    Tag,
+    Select,
+    TagCloseButton,
+    TagLabel,
+    Heading,
+    useBreakpointValue
 } from "@chakra-ui/react";
 import {FaMapMarkerAlt} from "react-icons/fa";
 import DatePicker from "react-datepicker";
@@ -17,6 +29,8 @@ import {useRecoilValue} from "recoil";
 import {userAtom} from "../../../recoil/userAtom";
 import {base} from "../../../utils/sClient";
 import {useRouter} from "next/router";
+import CardProfile from "../../../components/CardProfile";
+import CardProfileShort from "../../../components/CardProfileShort";
 
 
 function onlyUnique(value, index, self) {
@@ -69,10 +83,15 @@ function SearchWithTags({tags,callback}){
 }
 
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+
 export default function EventElement(){
     const user = useRecoilValue(userAtom);
     const router = useRouter();
-
+    const variant = useBreakpointValue({ base: 1, sm:1, md: 2,lg : 2, xl : 3 })
     const [event,setEvent] = useState({});
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
@@ -83,8 +102,28 @@ export default function EventElement(){
     const [mapClick,setMapClick] = useState([])
     const [price,setPrice] = useState(0);
     const [tags,setTags] = useState([])
+
+
+    const [partikip,setPartikip] = useState(false);
+    const [participants,setParticipants] = useState([]);
+
     const toast = useToast()
 
+    useEffect(() => {
+        (async function(){
+            const {data,error} = await base.from('EventParticipants').select('*').eq('eventid',router.query.id).eq('userid',user.id);
+            if(data && data.length > 0){
+
+                setPartikip(data);
+            }
+            const {data:multiplePartikip,error : errorMultiplePartikip} = await base.from('EventParticipants').select('*,userid(*)').eq('eventid',router.query.id);
+            if(multiplePartikip && multiplePartikip.length > 0 ){
+                console.log(multiplePartikip,user)
+                setParticipants(multiplePartikip)
+            }
+
+        })();
+    },[])
 
     const middleware = () => {
         if(event.createdby === user.id) {
@@ -241,9 +280,53 @@ export default function EventElement(){
 
     }
     const Partikip = () => {
-        console.log('Partikip');
+        (async function(){
+            const {data,error} = await base.from('EventParticipants').insert({eventid : router.query.id, userid : user.id})
+            if(data) {
+                toast({
+                    title: 'Participare salvata',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                })
+                setPartikip(data);
+                setParticipants([...participants, {...data[0],userid : user}])
+            }
+            if(error){
+                toast({
+                    title: 'Eroare...',
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: true,
+                })
+            }
+        })();
+    }
+    const PartikipDelete = async() => {
+        const {data,error} = await base.from('EventParticipants').delete().match({eventid : router.query.id})
+        if(data && data.length > 0) {
+            toast({
+                title: 'Participare modificata',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+            })
+            console.log('data',data);
+            const participanti = [...participants];
+            const d = participanti.filter(el => el.id !== data[0].id);
+            console.log(d,participanti)
+            setParticipants([...d]);
+            setPartikip(false);
+        }
+        if(error){
+            toast({
+                title: 'Eroare...',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            })
+        }
 
-        // const {data,error} =
     }
     return (
         <>
@@ -308,7 +391,33 @@ export default function EventElement(){
                     }
 
                     {middleware() === true && <Button colorScheme={"green"} onClick={Submit}>Salveaza Modificarile</Button>}
-                    {middleware() === false && <Button colorScheme={"purple"} onClick={Partikip}>Vreau sa Particip!</Button>}
+                    {middleware() === false && partikip === false && <Button colorScheme={"purple"} onClick={Partikip}>Vreau sa Particip!</Button>}
+                    {middleware() === false && partikip !== false && <Button colorScheme={"gray"} onClick={PartikipDelete}>Nu mai vreau sa particip.</Button>}
+
+                    <Heading
+                        style={{textAlign:'center'}}
+                        lineHeight={1.1}
+                        style={{marginBottom:'1em',marginTop:'1em'}}
+                        fontSize={{ base: '2xl'}}>
+                        <Text
+                            as={'span'}
+                            bgGradient="linear(to-r, red.400,pink.400)"
+                            bgClip="text">
+                            Participanti ({participants.length})
+                        </Text>{' '}
+                    </Heading>
+
+
+                    <Swiper
+                        spaceBetween={50}
+                        slidesPerView={variant}
+                    >
+                        {
+                            participants.map(el => (
+                                <SwiperSlide key={el.id}><CardProfileShort id={el.userid.id} name={el.userid.name} profession={el.userid.profession} /></SwiperSlide>
+                            ))
+                        }
+                    </Swiper>
                 </Stack>
             </Container>
         }
