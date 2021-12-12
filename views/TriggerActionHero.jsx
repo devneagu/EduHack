@@ -11,8 +11,11 @@ import {
     createIcon, InputGroup, InputLeftElement, Input, InputRightElement,
 } from '@chakra-ui/react';
 import {FaMapMarkerAlt } from "react-icons/fa";
+import {useRouter} from "next/router";
 
 export default function TriggerActionHero() {
+    const router = useRouter();
+
     return (
         <>
             <Head>
@@ -57,6 +60,7 @@ export default function TriggerActionHero() {
                                     borderTopLeftRadius={0}
                                     borderBottomLeftRadius={0}
                                     px={6}
+                                    onClick={() => { router.push('/event')}}
                                     _hover={{
                                         bg: 'green.500',
                                     }}>

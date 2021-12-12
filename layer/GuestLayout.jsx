@@ -11,7 +11,7 @@ export default function GuestLayout() {
             <TriggerActionHero />
             <HeroSection />
             <StatsGridImage />
-            <Testimonials />
+            {/*<Testimonials />*/}
             <Footer/>
         </>
     )

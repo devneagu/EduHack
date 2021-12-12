@@ -182,17 +182,16 @@ export default function HeroSection() {
                                 bg: 'red.400',
                                 zIndex: -1,
                             }}>
-                            Write once,
+                            Oportunitati pe interesul tau,
+                            ,
                         </Text>
                         <br />
                         <Text as={'span'} color={'red.400'}>
-                            use everywhere!
+                            acum la un click distanta!
                         </Text>
                     </Heading>
                     <Text color={'gray.500'}>
-                        Snippy is a rich coding snippets app that lets you create your own
-                        code snippets, categorize them, and even sync them in the cloud so
-                        you can use them anywhere. All that is free!
+                        Cookiebite este o platforma complexa, usor de utilizat unde poti sa iti gasesti intr-un timp scurt evenimente si oportunitati potrivite tie, din domenii variate.
                     </Text>
                     <Stack
                         spacing={{ base: 4, sm: 6 }}

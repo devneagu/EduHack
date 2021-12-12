@@ -39,7 +39,6 @@ import {
 
 import NextLink from "next/link";
 
-
 export default function WithSubnavigation() {
     const { isOpen, onToggle } = useDisclosure();
 

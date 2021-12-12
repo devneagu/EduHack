@@ -45,19 +45,16 @@ export default function StatsGridImage() {
                                 mb={3}
                                 fontSize={'xl'}
                                 color={'gray.500'}>
-                                Technology
+                                Technologie - Networking - Educatie
                             </Text>
                             <Heading
                                 color={'white'}
                                 mb={5}
                                 fontSize={{ base: '3xl', md: '5xl' }}>
-                                21st century education
+                                Educatia secolului XXI
                             </Heading>
                             <Text fontSize={'xl'} color={'gray.400'}>
-                                The NewLife™ technology allows you to monitor your crops and get
-                                complete insights at real time. The proprietary
-                                software/hardware ecosystem prevents your plants from getting
-                                neglected.
+                                Educatia nonformala asigura procesul de invatare oricand si oriunde, pe tot parcursul vietii.  Scopul este imbunatatirea calitatii resursei umane din sistemul educational necesara societatii cunoasterii
                             </Text>
                         </Box>
 
@@ -93,38 +90,34 @@ const StatsText = ({ children }) => (
 
 const stats = [
     {
-        title: '10+',
+        title: '24/7+',
         content: (
             <>
-                <StatsText>Software modules</StatsText> for detailed monitoring and
-                real-time analytics
+                <StatsText>Un proces continuu de invatare</StatsText>
             </>
         ),
     },
     {
-        title: '24/7',
+        title: '5+',
         content: (
             <>
-                <StatsText>Analytics</StatsText> enabled right in your dashboard without
-                history limitations
+                <StatsText>Potrivita Oricui</StatsText>
             </>
         ),
     },
     {
-        title: '13%',
+        title: 'Oportunitati Infinite',
         content: (
             <>
-                <StatsText>Farms</StatsText> in North America has chosen NewLife™ as
-                their management solution
+                <StatsText>Poti interactiona </StatsText> cu fiecare membru din cadrul platformei
             </>
         ),
     },
     {
-        title: '250M+',
+        title: '',
         content: (
             <>
-                <StatsText>Plants</StatsText> currently connected and monitored by the
-                NewLife™ software
+
             </>
         ),
     },
