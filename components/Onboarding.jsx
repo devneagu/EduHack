@@ -3,7 +3,19 @@ import {base} from "../utils/sClient";
 import {useEffect, useReducer, useState} from "react";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {userAtom} from "../recoil/userAtom";
-import {Container, CheckboxGroup, HStack, Checkbox, Stack, Heading, Button, Text, Input} from "@chakra-ui/react";
+import {
+    Container,
+    CheckboxGroup,
+    HStack,
+    Checkbox,
+    Stack,
+    Heading,
+    Button,
+    Text,
+    Input,
+    Image,
+    Center
+} from "@chakra-ui/react";
 
 
 function Story({header,children}){
@@ -161,8 +173,10 @@ export default function Onboarding() {
                 }
                 {
                     page == 3 &&
-                    <Story header={'All set!!'}>
-                        <p>Imagine sugestiva, de preferat pe inaltime</p>
+                    <Story header={'Multumim de incredere!'}>
+                        <Center>
+                            <Image style={{ width:'300px'}}src={'/Asset_22.svg'} />
+                        </Center>
                     </Story>
                 }
 
