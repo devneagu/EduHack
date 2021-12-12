@@ -73,7 +73,13 @@ export default function WithSubnavigation() {
                         fontFamily={'heading'}
                         color={useColorModeValue('gray.800', 'white')}>
                         <NextLink href={'/'} onClick={onToggle}>
-                            <Heading fontSize={'3xl'}>Cookie Bite</Heading>
+                            <Flex justify={
+                                'center'
+                            }>
+                                <Image style={{height:'35px',display:'inline'}} src={'/Asset_22.svg'} />
+                                <Heading fontSize={'3xl'}>Cookie Bite</Heading>
+                            </Flex>
+
                         </NextLink>
                     </Text>
 
