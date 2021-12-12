@@ -1,4 +1,4 @@
-import {Box, Button, Center, Flex, Heading, Tag, Text, useColorModeValue} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Spacer, Tag, Text, useColorModeValue} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {base} from "../../utils/sClient";
@@ -34,10 +34,15 @@ export default function Event() {
     },[])
 
     const elementClickMap = (event) => {
-        if(event.mapPosition.length == undefined){
-            setCenterData(event.mapPosition);
-            setZoom(16)
-        }
+        setTimeout(() => {
+            if(event.mapPosition.length == undefined){
+                setCenterData(event.mapPosition);
+                setZoom(16)
+            }
+        },200)
+    }
+    const routeToElement = (id) => {
+        router.push(`/event/${id}`)
     }
     return (
         <>
@@ -50,10 +55,20 @@ export default function Event() {
                         eventData.map(el => (
                             <Box bg={useColorModeValue('white', 'gray.700')}
                                  p={5} boxShadow={'lg'} key={el.id} style={{padding:'1.5em',  borderRadius:'0.5em', margin:'0.5em', marginTop : '0'}} onClick={() => elementClickMap(el)}>
-                                <Heading fontSize={'md'}>{el.title}</Heading>
-                                <Text>{el.description.substring(0,50) + '...'}</Text>
-                                <Tag colorScheme={"gray"} marginRight={'0.5em'}>{el.payable ? 'Cu plata' : 'Gratis'}</Tag>
-                                <Tag colorScheme={"purple"}>{el.eventType ? 'Fizic' : 'Online'}</Tag>
+                                <Flex direction={'column'} minH={'100px'} verticalAlign={'center'} justifyContent={'center'} justifyItems={'center'}>
+                                    <Heading fontSize={'md'}>{el.title}</Heading>
+                                    <Text>{el.description.substring(0,50) + '...'}</Text>
+                                    <Flex>
+                                        <Box p='2'>
+                                            <Tag colorScheme={"gray"} marginRight={'0.5em'}>{el.payable ? 'Cu plata' : 'Gratis'}</Tag>
+                                            <Tag colorScheme={"purple"}>{el.eventType ? 'Fizic' : 'Online'}</Tag>
+                                        </Box>
+                                        <Spacer />
+                                        <Box position={'relative'}>
+                                            <Button onClick={() => routeToElement(el.id)} size={'xs'} colorScheme='teal' position={'absolute'} style={{top:'6px',right:0}}>Detalii</Button>
+                                        </Box>
+                                    </Flex>
+                                </Flex>
                             </Box>
                         ))
                     }

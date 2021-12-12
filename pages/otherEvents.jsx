@@ -5,7 +5,7 @@ import GMaps from "../components/GMaps";
 import {useEffect, useState} from "react";
 import {base} from "../utils/sClient";
 import ProductSimple from "../components/ProductSimple";
-import {Heading} from "@chakra-ui/react";
+import {Box, Center, Heading, useColorModeValue} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 
 export default function OtherEvents() {
@@ -24,7 +24,14 @@ export default function OtherEvents() {
     return (
         <div>
             {events.length > 0 &&
-            <div style={{marginLeft:'5%'}}>
+                <Center m={'0 auto'} py={6}>
+                    <Box
+                        w={'full'}
+                        bg={useColorModeValue('white', 'gray.900')}
+                        rounded={'lg'}
+                        p={6}
+                        textAlign={'center'}
+                    >
                 <Heading fontSize={'lg'}  fontFamily={'body'} fontWeight={600} position={"relative"}>
                     Alte Evenimente
                 </Heading>
@@ -37,8 +44,8 @@ export default function OtherEvents() {
                         }
                     </div>
                 </div>
-
-            </div>
+                    </Box>
+                </Center>
             }
         </div>
     )

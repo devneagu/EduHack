@@ -10,16 +10,17 @@ const render = (status) => {
     return <h1>{status}</h1>;
 };
 
-export default function GmapsModified({rightLayout,callback}) {
-    const [clicks, setClicks] = useState([]);
+export default function GmapsModified({rightLayout,callback,position,middleware}) {
+    const [clicks, setClicks] = useState(() => {if(position !== undefined) return [position]; return [] } );
     const [zoom, setZoom] = useState(7);
-    const [center, setCenter] = useState({ lat: 45.6363010353717, lng: 25.2 });
+    const [center, setCenter] = useState(() => position !== undefined ? position : { lat: 45.6363010353717, lng: 25.2 });
 
 
     const onClick = (e) => {
-        setClicks([e.latLng]);
-
-        callback([e.latLng.toJSON()])
+        if(middleware === undefined || middleware === true) {
+            setClicks([e.latLng]);
+            callback([e.latLng.toJSON()])
+        }
     };
     const onIdle = (m) => {
         setZoom(m.getZoom());
@@ -67,9 +68,7 @@ export default function GmapsModified({rightLayout,callback}) {
                 }
             />
             <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
-            {clicks.map((latLng, i) => (
-                <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
-            ))}
+
             <button onClick={() => setClicks([])}>Clear</button>
 
         </div>

@@ -32,8 +32,18 @@ export default function ViewOtherEvents({size}) {
 
             {events.length > 0 &&
             <div style={{marginLeft:'5%'}}>
-                <Heading fontSize={'lg'}  fontFamily={'body'} fontWeight={500} position={"relative"} onClick={goToOtherEvents} style={{cursor:"pointer"}}>
-                    Alte Evenimente <ExternalLinkIcon fontSize={'xs'} />
+                <Heading
+                    style={{textAlign:'center'}}
+                    lineHeight={1.1}
+                    style={{marginBottom:'1em',marginTop:'1em'}}
+                    fontSize={{ base: 'xl'}}>
+                    <Text
+                        as={'span'}
+                        bgGradient="linear(to-r, red.400,pink.400)"
+                        bgClip="text" onClick={goToOtherEvents}>
+                        Alte Evenimente
+                    </Text>{' '}
+                    <ExternalLinkIcon fontSize={'xs'} />{' '}
                 </Heading>
 
                 <div>

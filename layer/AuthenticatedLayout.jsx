@@ -4,7 +4,7 @@ import TriggerActionHero from "../views/TriggerActionHero";
 import StatsGridImage from "../views/StatsGridImage";
 import Footer from "../views/footer";
 import Testimonials from "../views/Testimonials";
-import {useSetRecoilState} from "recoil";
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import {userAtom} from "../recoil/userAtom";
 import {useEffect, useState} from "react";
 import {base} from "../utils/sClient";
@@ -12,6 +12,7 @@ import WithSubnavigation from "../components/Navigation";
 
 export default function AuthenticatedLayout({children}) {
     const setUser = useSetRecoilState(userAtom);
+    const user = useRecoilValue(userAtom);
     const [loading,setLoading] = useState(true);
     useEffect(() => {
         (async function(){
@@ -26,7 +27,7 @@ export default function AuthenticatedLayout({children}) {
         <>
             {loading === false &&
                 <>
-                    <WithSubnavigation/>
+                    {user.onboarding === true && <WithSubnavigation/> }
                     {children}
                 </>
 

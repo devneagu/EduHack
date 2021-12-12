@@ -1,6 +1,6 @@
 // 1. Create a component that consumes the `useRadio` hook
 import {Box, HStack, useRadio, useRadioGroup} from "@chakra-ui/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props)
@@ -10,7 +10,7 @@ function RadioCard(props) {
 
     return (
         <Box as='label'>
-            <input {...input} />
+            <input  {...input} />
             <Box
                 {...checkbox}
                 cursor='pointer'
@@ -35,13 +35,13 @@ function RadioCard(props) {
 }
 
 // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
-export default function RadioButtons({options,callback,value}) {
+export default function RadioButtons({options,callback,value,middleware}) {
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'framework',
         defaultValue: value,
-        //de modificat cu callback
-        onChange: (e) => callback(e),
-    })
+        onChange: (e) => callback(e)
+        ,
+    });
 
     const group = getRootProps()
     return (
@@ -49,7 +49,7 @@ export default function RadioButtons({options,callback,value}) {
             {options.map((value) => {
                 const radio = getRadioProps({ value })
                 return (
-                    <RadioCard key={value} {...radio} >
+                    <RadioCard isDisabled={middleware} key={value} {...radio}>
                         {value}
                     </RadioCard>
                 )

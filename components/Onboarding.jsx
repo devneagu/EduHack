@@ -147,8 +147,8 @@ export default function Onboarding() {
 
                 {page === 0 && <Story header={'Cum te numesti?'}>
                         <Stack spacing={3}>
-                            <Input placeholder='Nume' value={state.name} onChange={(e) => updateKey('name',e.target.value) } size='lg' />
-                            <Input placeholder='Profesie' size='lg'  value={state.profession}  onChange={(e) => updateKey('profession',e.target.value) } />
+                            <Input  bg={'#fff'} placeholder='Nume' value={state.name} onChange={(e) => updateKey('name',e.target.value) } size='lg' />
+                            <Input bg={'#fff'} placeholder='Profesie' size='lg'  value={state.profession}  onChange={(e) => updateKey('profession',e.target.value) } />
                         </Stack>
                     </Story>
                 }
