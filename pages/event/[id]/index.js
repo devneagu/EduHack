@@ -16,7 +16,7 @@ import {
     TagCloseButton,
     TagLabel,
     Heading,
-    useBreakpointValue
+    useBreakpointValue, useDisclosure
 } from "@chakra-ui/react";
 import {FaMapMarkerAlt} from "react-icons/fa";
 import DatePicker from "react-datepicker";
@@ -32,6 +32,16 @@ import {useRouter} from "next/router";
 import CardProfile from "../../../components/CardProfile";
 import CardProfileShort from "../../../components/CardProfileShort";
 
+
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+} from '@chakra-ui/react'
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
@@ -90,6 +100,7 @@ import 'swiper/css';
 
 export default function EventElement(){
     const user = useRecoilValue(userAtom);
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter();
     const variant = useBreakpointValue({ base: 1, sm:1, md: 2,lg : 2, xl : 3 })
     const [event,setEvent] = useState({});
@@ -102,6 +113,9 @@ export default function EventElement(){
     const [mapClick,setMapClick] = useState([])
     const [price,setPrice] = useState(0);
     const [tags,setTags] = useState([])
+
+
+    const [messageHost,setMessageHost] = useState('');
 
 
     const [partikip,setPartikip] = useState(false);
@@ -328,10 +342,46 @@ export default function EventElement(){
         }
 
     }
+
+
+    const sendMessage = async() => {
+        console.log(messageHost,event)
+        const {error} = await base.from('EventMessage').insert({eventid : router.query.id, userid : user.id,message:messageHost,eventauthor:event.createdby},{returning:'minimal'})
+        if(error == null) {
+            toast({
+                title: 'Mesaj Trimis',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+            });
+        }
+        if(error){
+            toast({
+                title: 'Eroare...',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            })
+        }
+        setMessageHost('');
+        onClose();
+    }
+
+    const [allMessages,setAllMessages] = useState([]);
+    useEffect(() => {
+        (async function(){
+            const {data,error} = await base.from('EventMessage').select('*,userid(*)');
+            if(data){
+                setAllMessages(data);
+            }
+        })();
+    },[])
+
     return (
         <>
         {event && event.hasOwnProperty('id') === true && <Container style={{margin: '0 auto', marginTop: '2em', marginBottom: '2em'}}>
                 <Stack spacing={4}>
+                    {event.createdby !== user.id && <Button onClick={onOpen}>Mesaj Organizator</Button>}
                     <FormControl id='eventName'>
                         <FormLabel>Nume Eveniment</FormLabel>
                         <Input type='text' placeholder='Cel mai tare eveniment...' value={name} onChange={(e) => {
@@ -418,8 +468,48 @@ export default function EventElement(){
                             ))
                         }
                     </Swiper>
+
+                    {event.createdby === user.id
+                        &&
+                        <>
+                            <Heading
+                                style={{textAlign:'center'}}
+                                lineHeight={1.1}
+                                style={{marginBottom:'1em',marginTop:'1em'}}
+                                fontSize={{ base: '2xl'}}>
+                                <Text
+                                    as={'span'}
+                                    bgGradient="linear(to-r, red.400,pink.400)"
+                                    bgClip="text">
+                                    Mesaje
+                                </Text>{' '}
+                            </Heading>
+                            {
+                                allMessages.map(el => (
+                                    <p>{el.message}</p>
+                                ))
+                            }
+                        </>
+                    }
                 </Stack>
-            </Container>
+
+                <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Ai intrebari? Trimite un mesaj</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Textarea value={messageHost} onChange={(e) => setMessageHost(e.target.value)}>
+
+                            </Textarea>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button onClick={sendMessage} colorScheme={'green'}>Trimite!</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+        </Container>
         }
         </>
     )

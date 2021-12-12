@@ -46,7 +46,6 @@ export default function CardProfileShort({id,name,profession,url}) {
                     }}
                 />
                 <Heading fontSize={'2xl'} fontFamily={'body'} onClick={() => {console.log(id)}} style={{cursor:'pointer'}}>
-
                     {name}
                 </Heading>
                 <Text fontWeight={600} color={'gray.500'} mb={4}>
