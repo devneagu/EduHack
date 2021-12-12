@@ -169,11 +169,9 @@ export default function InsertEvent(){
         }
         if(errorMessage) return;
         //submit data
-        console.log(data);
 
         const {data:inserted,error} = await base.from('Events').insert(data);
-        console.log('inserted',inserted,error);
-        if(data){
+        if(inserted){
             toast({
                 title: 'Eveniment creat!',
                 status: 'success',

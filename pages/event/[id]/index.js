@@ -73,7 +73,6 @@ export default function EventElement(){
     const user = useRecoilValue(userAtom);
     const router = useRouter();
 
-    const [modified,setModified] = useState(false);
     const [event,setEvent] = useState({});
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
@@ -89,7 +88,6 @@ export default function EventElement(){
 
     const middleware = () => {
         if(event.createdby === user.id) {
-            if(!modified) setModified(true);
             return true;
         }
         return false;
@@ -100,7 +98,6 @@ export default function EventElement(){
             const eventId = router.query.id;
             const {data,error} = await base.from('Events').select('*').eq('id',eventId).single();
             if(data){
-                console.log(data)
                 setEvent(data);
                 setName(data.title);
                 setDescription(data.description);
@@ -208,6 +205,9 @@ export default function EventElement(){
                 isClosable: true,
             })
         }
+        if(data.eventType === false){
+            data.mapPosition = [];
+        }
         if(data.tags.length === 0){
             errorMessage = true;
             toast({
@@ -219,11 +219,10 @@ export default function EventElement(){
         }
         if(errorMessage) return;
         //submit data
-        console.log(data);
 
-        const {data:inserted,error} = await base.from('Events').update(data);
-        console.log('inserted',inserted,error);
-        if(data){
+
+        const {data:updated,error} = await base.from('Events').update(data);
+        if(updated){
             toast({
                 title: 'Eveniment modificat cu succes!',
                 status: 'success',
@@ -241,7 +240,11 @@ export default function EventElement(){
         }
 
     }
+    const Partikip = () => {
+        console.log('Partikip');
 
+        // const {data,error} =
+    }
     return (
         <>
         {event && event.hasOwnProperty('id') === true && <Container style={{margin: '0 auto', marginTop: '2em', marginBottom: '2em'}}>
@@ -304,7 +307,8 @@ export default function EventElement(){
                         </FormControl>
                     }
 
-                    {modified === true && <Button colorScheme={"green"} onClick={Submit}>Salveaza Modificarile</Button>}
+                    {middleware() === true && <Button colorScheme={"green"} onClick={Submit}>Salveaza Modificarile</Button>}
+                    {middleware() === false && <Button colorScheme={"purple"} onClick={Partikip}>Vreau sa Particip!</Button>}
                 </Stack>
             </Container>
         }
